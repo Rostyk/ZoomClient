@@ -12,11 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ZoomClient"
         tools:targetApi="31">
+
         <activity
             android:name=".presentation.ui.screens.drawer.ProjectsActivity"
             android:exported="false"
             android:label="@string/title_activity_projects"
             android:theme="@style/Theme.ZoomClient" />
+
         <activity
             android:name=".presentation.ui.screens.MainActivity"
             android:exported="true"
