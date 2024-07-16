@@ -9,17 +9,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Composer
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.test.zoomclient.presentation.navigation.AppNavHost
-import com.test.zoomclient.presentation.ui.screens.login.componenets.LoginForm
 import com.test.zoomclient.presentation.theme.ZoomClientTheme
 
-val BASE_URL = "https://api.staging.domain.com"
-val BASE_URL = "https://api.qa.domain.com"
-val BASE_URL = "https://api.prod.domain.com"
 
 class MainActivity : ComponentActivity() {
 

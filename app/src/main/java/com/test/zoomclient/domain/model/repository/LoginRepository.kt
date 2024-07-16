@@ -12,14 +12,10 @@ class LoginRepository {
 
     private val client = RetrofitClient.getInstance()
 
-    fun login(credentials: Credentials): User {
-
+    suspend fun login(credentials: Credentials): User {
         val loginApi = client.create(LoginAPI::class.java)
-
-        GlobalScope.launch {
-            val body = LoginBody(credentials.login, credentials.pwd)
-            val result = loginApi.login(body)
-            return User(result.body()!!.access_token)
-        }
+        val body = LoginBody(credentials.login, credentials.pwd)
+        val result = loginApi.login(body)
+        return User(result.body()!!.access_token)
     }
 }

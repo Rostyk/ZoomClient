@@ -95,7 +95,7 @@ fun LoginForm(viewModel: LoginViewModel,
             when (state) {
                is LoginUiState.Error -> Text(text = "Error")
                is LoginUiState.Authenticated -> {
-                   Text(text = "Loging success for user: ${state.user.name} ")
+                   Text(text = "Loging success for user: ${state.user.accessToken} ")
                }
                is LoginUiState.Loading -> {
                    CircularProgressIndicator(
