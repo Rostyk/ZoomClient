@@ -11,7 +11,10 @@ import kotlinx.coroutines.launch
 import java.io.IOException
 import java.lang.Exception
 import androidx.compose.runtime.*
-import com.test.zoomclient.presentation.ui.screens.login.componenets.Credentials
+import androidx.lifecycle.MutableLiveData
+import com.test.zoomclient.presentation.ui.screens.login.Credentials
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 
 /**
@@ -21,19 +24,29 @@ sealed interface LoginUiState {
     data class Authenticated(val user: User) : LoginUiState
     object Error : LoginUiState
     object Loading : LoginUiState
+    object Initial : LoginUiState
 }
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
 
-    var loginUiState: LoginUiState by mutableStateOf(LoginUiState.Loading)
+    var loginUiState: LoginUiState by mutableStateOf(LoginUiState.Initial)
     private set
+
+    private var _isLoggedIn = MutableStateFlow(false)
+    val isLoggedIn: StateFlow<Boolean> get() = _isLoggedIn
+
+    //var isLoggedIn: MutableLiveData<Boolean> = MutableLiveData(false)
+    //private set
 
     fun login(credentials: Credentials) {
         viewModelScope.launch {
             loginUiState = LoginUiState.Loading
 
             loginUiState = try {
-                LoginUiState.Authenticated(loginRepository.login(credentials))
+                _isLoggedIn.value = true
+
+                val user = loginRepository.login(credentials)
+                LoginUiState.Authenticated(user)
             } catch (e: IOException) {
                 LoginUiState.Error
             } catch (e: Exception) {
@@ -41,7 +54,6 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
             }
         }
     }
-
 
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {

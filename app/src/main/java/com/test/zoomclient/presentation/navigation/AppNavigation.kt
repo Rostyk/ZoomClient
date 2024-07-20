@@ -27,9 +27,10 @@ enum class Screen {
     LOGIN,
     HOME,
 }
-public sealed class NavigationItem(val route: String) {
-    object Home : NavigationItem(Screen.HOME.name)
+
+sealed class NavigationItem(val route: String) {
     object Login : NavigationItem(Screen.LOGIN.name)
+    object Home : NavigationItem(Screen.HOME.name)
 }
 
 enum class Drawer {

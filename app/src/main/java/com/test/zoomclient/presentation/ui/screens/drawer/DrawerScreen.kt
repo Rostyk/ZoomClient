@@ -72,6 +72,7 @@ fun DrawerScreen(
             DrawerNavigation.Projects.route -> ProjectsScreen(drawerState = drawerState)
             DrawerNavigation.Settings.route -> SettingsScreen(drawerState = drawerState)
         }
+
     }
 }
 
@@ -97,13 +98,13 @@ private fun DrawerContent(
             )
         }
         Spacer(modifier = Modifier.height(12.dp))
-        menus.forEach {
+        menus.forEach { item ->
             NavigationDrawerItem(
-                label = { Text(text = it.title, color = Color.White) },
-                icon = { Icon(imageVector = it.icon, contentDescription = null) },
+                label = { Text(text = item.title, color = Color.White) },
+                icon = { Icon(imageVector = item.icon, contentDescription = null) },
                 selected = false,
                 onClick = {
-                    onMenuClick(it.route)
+                    onMenuClick(item.route)
                 }
             )
         }
