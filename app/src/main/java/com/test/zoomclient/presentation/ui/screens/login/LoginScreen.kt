@@ -1,6 +1,7 @@
 package com.test.zoomclient.presentation.ui.screens.login
 
 import LoginViewModel
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.BusinessCenter
 import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Visibility
@@ -30,6 +32,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -51,17 +54,26 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.test.zoomclient.R
+import com.test.zoomclient.presentation.navigation.DrawerNavigation
 import com.test.zoomclient.presentation.navigation.NavigationItem
 import com.test.zoomclient.presentation.theme.ZoomClientTheme
+import com.test.zoomclient.presentation.ui.screens.drawer.DrawerScreen
+import com.test.zoomclient.presentation.ui.screens.drawer.componenents.DrawerMenuItem
 
 @Composable
 fun LoginScreen(navController: NavController) {
-    val viewModel: LoginViewModel = viewModel(factory = LoginViewModel.Factory)
 
+    val viewModel: LoginViewModel = viewModel(factory = LoginViewModel.Factory)
+    //val hasHandledNavigation = remember { mutableStateOf(false)}
     val isLoggedIn: Boolean by viewModel.isLoggedIn.collectAsState()
 
-    if (isLoggedIn == true) {
-        navController.navigate(NavigationItem.Home.route)
+    if (isLoggedIn) {
+        LaunchedEffect(key1 = "test") {
+            navController.navigate(NavigationItem.Home.route)
+        }
+
+        //navController.navigate(NavigationItem.Home.route)
+        //hasHandledNavigation.value = true
     }
 
     Surface {
@@ -93,7 +105,7 @@ fun LoginScreen(navController: NavController) {
             when (state) {
                 is LoginUiState.Error -> Text(text = "Error")
                 is LoginUiState.Authenticated -> {
-                    navController.navigate(NavigationItem.Home.route)
+                    Log.v("ZoomClient", "Logged In")
                 }
                 is LoginUiState.Loading -> {
                     CircularProgressIndicator(
@@ -246,18 +258,12 @@ fun PasswordField(
 }
 
 
-@Preview(showBackground = true, device = "id:Nexus One", showSystemUi = true)
-@Composable
-fun LoginScreenPreview() {
-    ZoomClientTheme {
-        LoginScreen(navController = rememberNavController())
-    }
-}
 
 @Preview(showBackground = true, device = "id:Nexus One", showSystemUi = true)
 @Composable
 fun LoginScreenPreviewDark() {
     ZoomClientTheme(darkTheme = true) {
-        LoginScreen(navController = rememberNavController())
+        val projectsItem = DrawerMenuItem(Icons.Filled.BusinessCenter, "Projects", DrawerNavigation.Projects.route)
+        DrawerScreen(currentScreen = remember { mutableStateOf(projectsItem) })
     }
 }

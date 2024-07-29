@@ -35,22 +35,21 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     private var _isLoggedIn = MutableStateFlow(false)
     val isLoggedIn: StateFlow<Boolean> get() = _isLoggedIn
 
-    //var isLoggedIn: MutableLiveData<Boolean> = MutableLiveData(false)
-    //private set
-
     fun login(credentials: Credentials) {
         viewModelScope.launch {
             loginUiState = LoginUiState.Loading
 
-            loginUiState = try {
-                _isLoggedIn.value = true
+            try {
+
 
                 val user = loginRepository.login(credentials)
-                LoginUiState.Authenticated(user)
+                loginUiState = LoginUiState.Authenticated(user)
+                _isLoggedIn.value = true
+
             } catch (e: IOException) {
-                LoginUiState.Error
+                loginUiState = LoginUiState.Error
             } catch (e: Exception) {
-                LoginUiState.Error
+                loginUiState = LoginUiState.Error
             }
         }
     }
