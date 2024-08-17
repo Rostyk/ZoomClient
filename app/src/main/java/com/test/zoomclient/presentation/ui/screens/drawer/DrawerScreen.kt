@@ -23,15 +23,19 @@ import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.test.zoomclient.presentation.navigation.DrawerNavigation
+import com.test.zoomclient.presentation.theme.ZoomClientTheme
 import com.test.zoomclient.presentation.ui.screens.drawer.componenents.DrawerMenuItem
 import com.test.zoomclient.presentation.ui.screens.projects.ProjectsScreen
 import com.test.zoomclient.presentation.ui.screens.settings.SettingsScreen
@@ -108,5 +112,14 @@ private fun DrawerContent(
                 }
             )
         }
+    }
+}
+
+@Preview(showBackground = true, device = "id:Nexus One", showSystemUi = true)
+@Composable
+fun DrawerScreenPreviewDark() {
+    ZoomClientTheme(darkTheme = true) {
+        val projectsItem = DrawerMenuItem(Icons.Filled.BusinessCenter, "Projects", DrawerNavigation.Projects.route)
+        DrawerScreen(currentScreen = remember { mutableStateOf(projectsItem) })
     }
 }

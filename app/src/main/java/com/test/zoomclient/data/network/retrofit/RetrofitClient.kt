@@ -10,8 +10,9 @@ object RetrofitClient {
     class AuthInterceptor : Interceptor {
         override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
             var request = chain.request()
-            request = request.newBuilder().header("Authorization", "Bearer $authToken").build()
-
+            if (!request.url().encodedPath().endsWith("auth")) {
+                request = request.newBuilder().header("Authorization", "Bearer $authToken").build()
+            }
             return chain.proceed(request)
         }
     }

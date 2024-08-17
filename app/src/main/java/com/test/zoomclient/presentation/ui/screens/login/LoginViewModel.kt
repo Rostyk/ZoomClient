@@ -1,4 +1,5 @@
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -49,7 +50,9 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
             } catch (e: IOException) {
                 loginUiState = LoginUiState.Error
             } catch (e: Exception) {
+                e.printStackTrace()
                 loginUiState = LoginUiState.Error
+
             }
         }
     }

@@ -257,13 +257,3 @@ fun PasswordField(
     )
 }
 
-
-
-@Preview(showBackground = true, device = "id:Nexus One", showSystemUi = true)
-@Composable
-fun LoginScreenPreviewDark() {
-    ZoomClientTheme(darkTheme = true) {
-        val projectsItem = DrawerMenuItem(Icons.Filled.BusinessCenter, "Projects", DrawerNavigation.Projects.route)
-        DrawerScreen(currentScreen = remember { mutableStateOf(projectsItem) })
-    }
-}
