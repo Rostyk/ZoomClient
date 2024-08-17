@@ -18,6 +18,7 @@ class LoginRepository {
         val loginApi = client.create(LoginAPI::class.java)
         val body = LoginBody(credentials.login, credentials.pwd)
         val result = loginApi.login(body)
+        RetrofitClient.authToken = result.body()!!.access_token
         return User(result.body()!!.access_token)
     }
 }

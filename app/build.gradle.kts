@@ -74,4 +74,6 @@ dependencies {
     implementation (libs.kotlinx.coroutines.android)
     implementation (libs.kotlinx.coroutines.core)
     implementation ("androidx.compose.material:material-icons-extended:1.6.2")
+    implementation ("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+
 }
