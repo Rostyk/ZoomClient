@@ -69,14 +69,20 @@ fun ProjectsScreen( drawerState: DrawerState) {
                 )
             }
         )
-        { paddingValues ->
+        { paddingValues  ->
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Top
+                verticalArrangement = Arrangement.Top,
+
+
             ) {
+                myProjects.forEach { project ->
+                    ProjectItem(project)
+                }
+                /*
                 val projectState = viewModel.projectUiState
                 when (projectState) {
                     is ProjectUiState.Error -> Text(text = "Error")
@@ -91,13 +97,15 @@ fun ProjectsScreen( drawerState: DrawerState) {
                         CircularProgressIndicator(
                             color = colorResource(id = R.color.teal_700),
                             strokeWidth = 5.dp
-                        )
-                    }
+
+                        ) }
 
                     else -> {
-
+                        *\
                         }
                     }
+
+                 */
                 }
             }
         }

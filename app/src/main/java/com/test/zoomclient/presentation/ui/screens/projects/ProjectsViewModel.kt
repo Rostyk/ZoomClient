@@ -28,8 +28,6 @@ class ProjectsViewModel(private val projectRepository: ProjectRepository) : View
             projectUiState = ProjectUiState.Loading
 
             try {
-
-
                 val projects = projectRepository.loadProjects()
                 projectUiState = ProjectUiState.Loaded(projects)
 
