@@ -2,12 +2,19 @@ package com.test.zoomclient.presentation.ui.screens.projects
 
 import android.util.Log
 import android.widget.TextView
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BusinessCenter
 import androidx.compose.material3.Card
@@ -33,6 +40,7 @@ import androidx.navigation.compose.rememberNavController
 import com.test.zoomclient.R
 import com.test.zoomclient.domain.model.Project
 import com.test.zoomclient.presentation.navigation.DrawerNavigation
+import com.test.zoomclient.presentation.navigation.NavigationItem
 import com.test.zoomclient.presentation.theme.ZoomClientTheme
 import com.test.zoomclient.presentation.ui.screens.Greeting
 import com.test.zoomclient.presentation.ui.screens.drawer.DrawerScreen
@@ -41,21 +49,14 @@ import com.test.zoomclient.presentation.ui.screens.drawer.componenents.DrawerMen
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
-fun ProjectsScreen( drawerState: DrawerState) {
+fun ProjectsScreen( drawerState: DrawerState,
+                    navController: NavHostController
+) {
 
     val viewModel: ProjectsViewModel = viewModel(factory = ProjectsViewModel.Factory)
 
 
-    val myProjects = ArrayList<Project>()
-    val project1 = Project(id = "2214", name = "syyyyf")
-    val project2 = Project(id = "14", name = "Name")
-    val project3 = Project(id = "2212144", name = "fggnf")
-    val project4 = Project(id = "Vkd", name = "ssffsf")
-    myProjects.add(project1)
-    myProjects.add(project2)
-    myProjects.add(project3)
-    myProjects.add(project4)
-
+    viewModel.loadProjects()
 
     ConstraintLayout(
         modifier = Modifier
@@ -73,23 +74,23 @@ fun ProjectsScreen( drawerState: DrawerState) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(paddingValues),
+                    .padding(paddingValues)
+                    .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top,
-
-
             ) {
-                myProjects.forEach { project ->
-                    ProjectItem(project)
-                }
-                /*
+
                 val projectState = viewModel.projectUiState
                 when (projectState) {
                     is ProjectUiState.Error -> Text(text = "Error")
                     is ProjectUiState.Loaded -> {
                         val projects = projectState.projects
-                        myProjects.forEach { project ->
-                            ProjectItem(project)
+                        projects.forEach { projects ->
+                            ProjectItem(projects){ project ->
+                                navController.navigate(NavigationItem.Milestones.route)
+
+                            }
+                            Spacer(modifier = Modifier.size(5.dp))
                         }
                     }
 
@@ -101,35 +102,33 @@ fun ProjectsScreen( drawerState: DrawerState) {
                         ) }
 
                     else -> {
-                        *\
                         }
                     }
 
-                 */
                 }
             }
         }
     }
 
+
 @Composable
-fun ProjectItem(projectt: Project){
+fun ProjectItem(projectt: Project, callback: (project: Project) -> Unit){
     Card(
         modifier = Modifier
             .fillMaxWidth()
+            .padding(5.dp),
+        onClick = {
+            callback(projectt)
+        }
     ) {
         Column {
             Text(text ="name: ${projectt.name}")
+            Spacer(modifier = Modifier.width(8.dp))
             Text(text ="Id: ${projectt.id}")
         }
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun ProjectPreview() {
-    val testProject = Project(id = "1", name = "My Project")
-    ProjectItem(projectt = testProject)
-}
 
 /*
 @Preview(showBackground = true, device = "id:Nexus One", showSystemUi = true)

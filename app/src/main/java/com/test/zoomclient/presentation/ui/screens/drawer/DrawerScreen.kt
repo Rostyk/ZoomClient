@@ -73,7 +73,7 @@ fun DrawerScreen(
     ) {
 
         when (currentScreen.value.route) {
-            DrawerNavigation.Projects.route -> ProjectsScreen(drawerState = drawerState)
+            DrawerNavigation.Projects.route -> ProjectsScreen(drawerState = drawerState, navController)
             DrawerNavigation.Settings.route -> SettingsScreen(drawerState = drawerState)
         }
 

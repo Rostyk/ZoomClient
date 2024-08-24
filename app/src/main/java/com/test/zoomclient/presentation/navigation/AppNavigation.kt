@@ -19,6 +19,7 @@ import androidx.navigation.navigation
 import com.test.zoomclient.presentation.ui.screens.drawer.DrawerScreen
 import com.test.zoomclient.presentation.ui.screens.drawer.componenents.DrawerMenuItem
 import com.test.zoomclient.presentation.ui.screens.login.LoginScreen
+import com.test.zoomclient.presentation.ui.screens.milestones.MilestonesScreen
 import com.test.zoomclient.presentation.ui.screens.projects.ProjectsScreen
 import com.test.zoomclient.presentation.ui.screens.settings.SettingsScreen
 import kotlinx.coroutines.CoroutineScope
@@ -26,11 +27,13 @@ import kotlinx.coroutines.CoroutineScope
 enum class Screen {
     LOGIN,
     HOME,
+    MILESTONES,
 }
 
 sealed class NavigationItem(val route: String) {
     object Login : NavigationItem(Screen.LOGIN.name)
     object Home : NavigationItem(Screen.HOME.name)
+    object Milestones : NavigationItem(Screen.MILESTONES.name)
 }
 
 enum class Drawer {
@@ -66,6 +69,9 @@ fun AppNavHost(
         composable(NavigationItem.Home.route) {
             val projectsItem = DrawerMenuItem(Icons.Filled.BusinessCenter, "Projects", DrawerNavigation.Projects.route)
             DrawerScreen(currentScreen = remember { mutableStateOf(projectsItem) })
+        }
+        composable(NavigationItem.Milestones.route) {
+            MilestonesScreen(navController)
         }
     }
 }
