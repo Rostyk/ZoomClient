@@ -10,18 +10,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navigation
 import com.test.zoomclient.presentation.ui.screens.drawer.DrawerScreen
 import com.test.zoomclient.presentation.ui.screens.drawer.componenents.DrawerMenuItem
 import com.test.zoomclient.presentation.ui.screens.login.LoginScreen
 import com.test.zoomclient.presentation.ui.screens.milestones.MilestonesScreen
-import com.test.zoomclient.presentation.ui.screens.projects.ProjectsScreen
-import com.test.zoomclient.presentation.ui.screens.settings.SettingsScreen
 import kotlinx.coroutines.CoroutineScope
 
 enum class Screen {
@@ -32,7 +27,7 @@ enum class Screen {
 
 sealed class NavigationItem(val route: String) {
     object Login : NavigationItem(Screen.LOGIN.name)
-    object Home : NavigationItem(Screen.HOME.name)
+    object DRAWER : NavigationItem(Screen.HOME.name)
     object Milestones : NavigationItem(Screen.MILESTONES.name)
 }
 
@@ -66,9 +61,9 @@ fun AppNavHost(
             LoginScreen(navController)
         }
 
-        composable(NavigationItem.Home.route) {
+        composable(NavigationItem.DRAWER.route) {
             val projectsItem = DrawerMenuItem(Icons.Filled.BusinessCenter, "Projects", DrawerNavigation.Projects.route)
-            DrawerScreen(currentScreen = remember { mutableStateOf(projectsItem) })
+            DrawerScreen(currentScreen = remember { mutableStateOf(projectsItem) }, navController)
         }
         composable(NavigationItem.Milestones.route) {
             MilestonesScreen(navController)

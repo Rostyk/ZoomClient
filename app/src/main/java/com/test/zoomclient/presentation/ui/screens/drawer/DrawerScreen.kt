@@ -51,7 +51,7 @@ val menus = arrayOf(
 @Composable
 fun DrawerScreen(
     currentScreen: MutableState<DrawerMenuItem>,
-    navController: NavHostController = rememberNavController(),
+    navController: NavHostController,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     drawerState: DrawerState = androidx.compose.material3.rememberDrawerState(initialValue = DrawerValue.Open)
 ) {
@@ -120,6 +120,6 @@ private fun DrawerContent(
 fun DrawerScreenPreviewDark() {
     ZoomClientTheme(darkTheme = true) {
         val projectsItem = DrawerMenuItem(Icons.Filled.BusinessCenter, "Projects", DrawerNavigation.Projects.route)
-        DrawerScreen(currentScreen = remember { mutableStateOf(projectsItem) })
+        DrawerScreen(currentScreen = remember { mutableStateOf(projectsItem) }, navController = rememberNavController())
     }
 }

@@ -33,7 +33,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -58,57 +57,53 @@ fun ProjectsScreen( drawerState: DrawerState,
 
     viewModel.loadProjects()
 
-    ConstraintLayout(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        Scaffold(
-            topBar = {
-                CustomAppBar(
-                    drawerState = drawerState,
-                    title = "Projects"
-                )
-            }
-        )
-        { paddingValues  ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-                    .verticalScroll(rememberScrollState()),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Top,
-            ) {
+    Scaffold(modifier = Modifier
+        .fillMaxSize(),
+        topBar = {
+            CustomAppBar(
+                drawerState = drawerState,
+                title = "Projects"
+            )
+        }
+    )
+    { paddingValues  ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top,
+        ) {
 
-                val projectState = viewModel.projectUiState
-                when (projectState) {
-                    is ProjectUiState.Error -> Text(text = "Error")
-                    is ProjectUiState.Loaded -> {
-                        val projects = projectState.projects
-                        projects.forEach { projects ->
-                            ProjectItem(projects){ project ->
-                                navController.navigate(NavigationItem.Milestones.route)
+            val projectState = viewModel.projectUiState
+            when (projectState) {
+                is ProjectUiState.Error -> Text(text = "Error")
+                is ProjectUiState.Loaded -> {
+                    val projects = projectState.projects
+                    projects.forEach { projects ->
+                        ProjectItem(projects){ project ->
+                            navController.navigate(NavigationItem.Milestones.route)
 
-                            }
-                            Spacer(modifier = Modifier.size(5.dp))
                         }
+                        Spacer(modifier = Modifier.size(5.dp))
                     }
+                }
 
-                    is ProjectUiState.Loading -> {
-                        CircularProgressIndicator(
-                            color = colorResource(id = R.color.teal_700),
-                            strokeWidth = 5.dp
+                is ProjectUiState.Loading -> {
+                    CircularProgressIndicator(
+                        color = colorResource(id = R.color.teal_700),
+                        strokeWidth = 5.dp
 
-                        ) }
+                    ) }
 
-                    else -> {
-                        }
-                    }
-
+                else -> {
                 }
             }
+
         }
     }
+}
 
 
 @Composable

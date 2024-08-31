@@ -16,7 +16,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.BusinessCenter
 import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Visibility
@@ -48,17 +47,11 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.test.zoomclient.R
-import com.test.zoomclient.presentation.navigation.DrawerNavigation
 import com.test.zoomclient.presentation.navigation.NavigationItem
-import com.test.zoomclient.presentation.theme.ZoomClientTheme
-import com.test.zoomclient.presentation.ui.screens.drawer.DrawerScreen
-import com.test.zoomclient.presentation.ui.screens.drawer.componenents.DrawerMenuItem
 
 @Composable
 fun LoginScreen(navController: NavController) {
@@ -69,7 +62,7 @@ fun LoginScreen(navController: NavController) {
 
     if (isLoggedIn) {
         LaunchedEffect(key1 = "test") {
-            navController.navigate(NavigationItem.Home.route)
+            navController.navigate(NavigationItem.DRAWER.route)
         }
 
         //navController.navigate(NavigationItem.Home.route)
