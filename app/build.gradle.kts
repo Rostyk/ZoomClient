@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    kotlin("plugin.serialization")
 }
 
 android {
@@ -75,5 +76,6 @@ dependencies {
     implementation (libs.kotlinx.coroutines.core)
     implementation ("androidx.compose.material:material-icons-extended:1.6.2")
     implementation ("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 
 }

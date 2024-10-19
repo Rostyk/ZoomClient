@@ -12,13 +12,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.test.zoomclient.data.network.retrofit.milestone
+import com.test.zoomclient.domain.model.Milestone
 import com.test.zoomclient.domain.model.Project
+import com.test.zoomclient.presentation.navigation.NavigationItem
 
 @Composable
-fun MilestonesScreen(navController: NavHostController, projectMilestone: milestone)
+fun MilestonesScreen(navController: NavHostController, projectMilestone: ArrayList<Milestone>)
 {
     Column {
-            Text(text ="id: ${projectMilestone.name}")
+            Text(text ="id: ${projectMilestone.first().name}")
         }
     }

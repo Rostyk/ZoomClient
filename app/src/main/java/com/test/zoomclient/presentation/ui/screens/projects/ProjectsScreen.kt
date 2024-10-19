@@ -83,11 +83,9 @@ fun ProjectsScreen( drawerState: DrawerState,
                 is ProjectUiState.Loaded -> {
                     val projects = projectState.projects
 
-                    val gson = GsonBuilder().create()
                     projects.forEach { projects ->
                         ProjectItem(projects){ project ->
-                            val milestoneJson = gson.toJson(project.milestone)
-                            navController.navigate(NavigationItem.Milestones.route + "/$milestoneJson")
+                            navController.navigate(project.milestones)
 
                         }
                         Spacer(modifier = Modifier.size(5.dp))
