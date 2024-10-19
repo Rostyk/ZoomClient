@@ -1,5 +1,6 @@
 package com.test.zoomclient.presentation.navigation
 
+import android.util.Log
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BusinessCenter
 import androidx.compose.material3.DrawerState
@@ -13,6 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.test.zoomclient.data.network.retrofit.milestone
+import com.test.zoomclient.domain.model.Project
 import com.test.zoomclient.presentation.ui.screens.drawer.DrawerScreen
 import com.test.zoomclient.presentation.ui.screens.drawer.componenents.DrawerMenuItem
 import com.test.zoomclient.presentation.ui.screens.login.LoginScreen
@@ -65,8 +70,16 @@ fun AppNavHost(
             val projectsItem = DrawerMenuItem(Icons.Filled.BusinessCenter, "Projects", DrawerNavigation.Projects.route)
             DrawerScreen(currentScreen = remember { mutableStateOf(projectsItem) }, navController)
         }
-        composable(NavigationItem.Milestones.route) {
-            MilestonesScreen(navController)
+        composable("${NavigationItem.Milestones.route}/{projectMilestone}") { navBackStackEntry ->
+            val gson: Gson = GsonBuilder().create()
+            val projectMilestoneJson = navBackStackEntry.arguments?.getString("projectMilestone")
+
+            if (projectMilestoneJson != null) {
+                val projectMilestone = gson.fromJson(projectMilestoneJson, milestone::class.java)
+                MilestonesScreen(navController, projectMilestone)
+            } else {
+                Log.v("Error", "Route found null")
+            }
+        }
         }
     }
-}

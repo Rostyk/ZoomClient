@@ -1,13 +1,24 @@
 package com.test.zoomclient.presentation.ui.screens.milestones
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.test.zoomclient.data.network.retrofit.milestone
 import com.test.zoomclient.domain.model.Project
 
 @Composable
-fun MilestonesScreen(navController: NavHostController
-) {
-    Text(text = "Milestones screen...")
-}
+fun MilestonesScreen(navController: NavHostController, projectMilestone: milestone)
+{
+    Column {
+            Text(text ="id: ${projectMilestone.name}")
+        }
+    }

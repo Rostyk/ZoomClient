@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.google.gson.GsonBuilder
 import com.test.zoomclient.R
 import com.test.zoomclient.domain.model.Project
 import com.test.zoomclient.presentation.navigation.DrawerNavigation
@@ -81,9 +82,12 @@ fun ProjectsScreen( drawerState: DrawerState,
                 is ProjectUiState.Error -> Text(text = "Error")
                 is ProjectUiState.Loaded -> {
                     val projects = projectState.projects
+
+                    val gson = GsonBuilder().create()
                     projects.forEach { projects ->
                         ProjectItem(projects){ project ->
-                            navController.navigate(NavigationItem.Milestones.route)
+                            val milestoneJson = gson.toJson(project.milestone)
+                            navController.navigate(NavigationItem.Milestones.route + "/$milestoneJson")
 
                         }
                         Spacer(modifier = Modifier.size(5.dp))
